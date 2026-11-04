@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fury 追老鼠</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/">← Text playground</a>
+  <header>
+    <p class="eyebrow">06 · Dialogue · two masks cut each other</p>
+    <h1>Fury 追老鼠</h1>
+    <p class="lede">这首诗其实是一段对话。Fury 说的话拼成一只狗，老鼠说的那一句拼成一只老鼠，旁白铺在地上。你就是那只老鼠，它会一直追你。</p>
+  </header>
+
+  <div class="bar">
+    <label class="switch" for="edge"><input type="checkbox" id="edge"><span class="track" aria-hidden="true"></span><span>轮廓线</span></label>
+  </div>
+
+  <div class="sheet">
+    <canvas class="stage" id="stage" role="img" aria-label="一只由 Fury 台词排成的狗，追着一只由老鼠台词排成的小老鼠。老鼠跟着指针移动；两只靠近时，字互相挤开。"></canvas>
+    <p class="readout"><span id="r-words">–</span><span id="r-state">–</span></p>
+  </div>
+  <p class="hint">狗的四条腿写的是 Fury 最后那四个词：condemn / you / to / death.，它就站在自己的判决上；尾巴上是它的名字。其余的话用粗体排进躯干和头。跑起来腿会摆，躯干里的字每一帧跟着重排。狗追的是你半秒前的位置，所以突然拐弯能甩开它；被它的鼻子碰到，或者被爪子踩住，就算被抓。两只身体互相从对方的遮罩里减掉，靠在一起时，字会被挤到各自剩下的空间里。</p>
+</div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

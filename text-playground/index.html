@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Text playground</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="/src/style.css">
+<style>
+.plates{list-style:none;margin:40px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:18px}
+.plate a{display:flex;flex-direction:column;height:100%;padding:20px 20px 18px;background:var(--sheet);border:1px solid var(--rule);text-decoration:none;transition:border-color .15s}
+.plate a:hover{border-color:var(--ink-soft)}
+.plate a:focus-visible{outline:2px solid var(--guide);outline-offset:3px}
+.no{font:500 11px/1 var(--mono);letter-spacing:.12em;color:var(--ink-soft)}
+.plate h2{margin:14px 0 2px;font:italic 400 28px/1.15 var(--serif)}
+.zh{font:500 13px var(--sans);letter-spacing:.08em;color:var(--ink-soft)}
+.plate p{margin:12px 0 0;font-size:14.5px;line-height:1.6}
+.tag{margin-top:auto;padding-top:16px;font:400 11px/1.4 var(--mono);color:var(--ink-soft)}
+.later{margin-top:56px;max-width:44em}
+.later h2{margin:0 0 10px;font:500 11.5px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.later ul{margin:0;padding-left:1.2em}
+.later li{margin:6px 0}
+@media (prefers-reduced-motion:reduce){.plate a{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Calligrammes · Concrete poetry · The Mouse’s Tale, 1865</p>
+    <h1>Text playground</h1>
+    <p class="lede">把文字当图像来排。现在只用一首诗：《爱丽丝梦游仙境》里老鼠讲的那条“尾巴”。每个实验试一种排法或一种玩法，图为主，字和图互相成立。</p>
+  </header>
+
+  <ol class="plates">
+    <li class="plate"><a href="/experiments/tale/">
+      <span class="no">01 · STATIC</span><h2>Mouse’s Tale</h2><span class="zh">两种排法</span>
+      <p>同一首诗排成阶梯、螺旋两种样子，并排对比各自得到什么、失去什么。两张的尾巴尖都能捏住：阶梯可以甩、拉直，螺旋两头都能拉开、卷回，捏住里头那端绕圈还能卷紧。</p>
+      <span class="tag">SVG textPath · layoutNextLine</span></a></li>
+    <li class="plate"><a href="/experiments/run/">
+      <span class="no">02 · INTERACTIVE</span><h2>Mouse Run</h2><span class="zh">会跑的老鼠尾巴</span>
+      <p>诗排在老鼠身体里，排不下的那一截就是尾巴。鼠标靠近，字会让开；抓住尾巴，老鼠就跑。</p>
+      <span class="tag">mask runs · verlet rope</span></a></li>
+    <li class="plate"><a href="/experiments/write/">
+      <span class="no">03 · INPUT</span><h2>Your Tale</h2><span class="zh">写你自己的尾巴</span>
+      <p>打字，字先填进老鼠身体，身体装满了再往尾巴里长。写得越多，尾巴越长。</p>
+      <span class="tag">prepare per keystroke</span></a></li>
+    <li class="plate"><a href="/experiments/cheese/">
+      <span class="no">04 · CONSERVATION</span><h2>Cheese</h2><span class="zh">吃奶酪，字守恒</span>
+      <p>整首诗一开始都在奶酪里。老鼠咬一口，装不下的字就流进老鼠肚子：奶酪越来越小，老鼠越来越胖，两边字数加起来永远不变。</p>
+      <span class="tag">one cursor, two shapes</span></a></li>
+    <li class="plate"><a href="/experiments/read/">
+      <span class="no">05 · READING</span><h2>Read the Tail</h2><span class="zh">尾巴即阅读</span>
+      <p>整首诗都在尾巴上。沿着尾巴往下读，读过的字会变红；读到 “death.” 时，尾巴就断了。</p>
+      <span class="tag">hit-test along a path · particles</span></a></li>
+    <li class="plate"><a href="/experiments/fury/">
+      <span class="no">06 · DIALOGUE</span><h2>Fury</h2><span class="zh">Fury 追老鼠</span>
+      <p>Fury 说的话拼成一只狗，四条腿上写着判决 “condemn you to death.”；老鼠说的话拼成一只老鼠，你就是那只老鼠。两边一碰，字会互相挤开。</p>
+      <span class="tag">two masks cut each other</span></a></li>
+  </ol>
+
+  <section class="later">
+    <h2>点子池</h2>
+    <ul>
+      <li>窗口宽度一变，剪影就跟着重排；手机竖屏下，尾巴改成往下垂</li>
+      <li>中英对照：同一只老鼠，左半边排英文，右半边排中文译本</li>
+      <li>用声音驱动：对着麦克风念诗，念到哪一行，哪一行就亮</li>
+      <li>不只是老鼠：瀑布（字往下流）、楼房（一层一句）</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>文本出自 Lewis Carroll《爱丽丝梦游仙境》（1865）第三章，属公版。排版引擎是 <a href="https://github.com/chenglou/pretext" target="_blank" rel="noopener">Pretext</a>。原始的两个探索文件在 <code>archive/</code>。</p>
+  </footer>
+</div>
+</body>
+</html>

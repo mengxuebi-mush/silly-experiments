@@ -1,0 +1,54 @@
+/* The specimen-book look shared by every experiment: cool proof-table ground, white sheets, hairlines. */
+:root{
+  --table:#ECEFF3;
+  --sheet:#FFFFFF;
+  --ink:#131722;
+  --ink-soft:#586173;
+  --rule:#D3D9E2;
+  --guide:#4F8FD6;   /* non-photo blue, the printer's layout pencil */
+  --accent:#C8452D;  /* proofreader's red */
+  --serif:"Libre Caslon Text","Songti SC","Noto Serif SC",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --sans:system-ui,-apple-system,"PingFang SC","Hiragino Sans GB","Noto Sans SC","Microsoft YaHei",sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--table:#0D1016;--sheet:#141922;--ink:#E9EDF4;--ink-soft:#9AA4B5;--rule:#262E3B;--guide:#6BA6E3;--accent:#EE7B62;color-scheme:dark}
+}
+:root[data-theme="dark"]{--table:#0D1016;--sheet:#141922;--ink:#E9EDF4;--ink-soft:#9AA4B5;--rule:#262E3B;--guide:#6BA6E3;--accent:#EE7B62;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--table);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65;-webkit-text-size-adjust:100%}
+a{color:inherit}
+.wrap{max-width:980px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.back{display:inline-block;margin-bottom:22px;font:500 12px/1 var(--mono);letter-spacing:.04em;color:var(--ink-soft);text-decoration:none}
+.back:hover{color:var(--ink)}
+.back:focus-visible{outline:2px solid var(--guide);outline-offset:3px}
+.eyebrow{margin:0 0 12px;font:500 11.5px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+h1{margin:0;font-family:var(--serif);font-weight:700;font-size:clamp(32px,6vw,52px);line-height:1.12;letter-spacing:.02em;text-wrap:balance}
+.lede{margin:12px 0 0;max-width:34em;color:var(--ink-soft)}
+
+.bar{margin-top:26px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--rule);background:var(--sheet)}
+.seg button{appearance:none;border:0;background:none;color:var(--ink-soft);font:500 12.5px/1 var(--mono);letter-spacing:.02em;padding:10px 14px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--rule)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--sheet)}
+.seg button:focus-visible,.plain:focus-visible{outline:2px solid var(--guide);outline-offset:2px}
+.lab{font:500 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-right:8px}
+.group{display:flex;align-items:center}
+.plain{appearance:none;border:1px solid var(--rule);background:var(--sheet);color:var(--ink);font:500 12.5px/1 var(--mono);padding:10px 14px;cursor:pointer}
+.plain[hidden]{display:none}
+.switch{position:relative;display:inline-flex;align-items:center;gap:10px;font:500 12.5px/1 var(--mono);cursor:pointer;user-select:none}
+.switch input{position:absolute;opacity:0;width:1px;height:1px}
+.switch .track{position:relative;width:34px;height:18px;border:1px solid var(--ink-soft);flex:none}
+.switch .track::after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;background:var(--ink-soft);transition:left .15s}
+.switch input:checked+.track{border-color:var(--guide)}
+.switch input:checked+.track::after{left:18px;background:var(--guide)}
+.switch input:focus-visible+.track{outline:2px solid var(--guide);outline-offset:3px}
+
+.sheet{margin-top:18px;background:var(--sheet);border:1px solid var(--rule);padding:clamp(8px,2vw,18px)}
+canvas.stage{display:block;width:100%;touch-action:none;-webkit-user-select:none;user-select:none}
+.readout{margin:12px 0 0;display:flex;flex-wrap:wrap;gap:4px 20px;justify-content:space-between;font:400 11.5px/1.5 var(--mono);letter-spacing:.02em;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.hint{margin:16px 0 0;max-width:40em;font-size:14.5px}
+footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--rule);max-width:44em;font-size:13px;line-height:1.7;color:var(--ink-soft)}
+footer p{margin:0 0 8px}
+@media (prefers-reduced-motion:reduce){.switch .track::after{transition:none}}

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>会跑的老鼠尾巴</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/">← Text playground</a>
+  <header>
+    <p class="eyebrow">Alice’s Adventures in Wonderland · Pretext · 实时排版</p>
+    <h1>会跑的老鼠尾巴</h1>
+    <p class="lede">诗被排进老鼠的身体，尾巴是诗的最后一截。鼠标靠近，文字让开；抓住尾巴，老鼠会跑。</p>
+  </header>
+
+  <div class="bar">
+    <div class="group"><span class="lab">Shape</span>
+      <div class="seg" id="seg-shape"><button type="button" data-v="mouse" aria-pressed="true">Mouse</button><button type="button" data-v="cheese" aria-pressed="false">Cheese</button></div>
+    </div>
+    <div class="group"><span class="lab">Style</span>
+      <div class="seg" id="seg-style"><button type="button" data-v="fill" aria-pressed="true">Filled</button><button type="button" data-v="ring" aria-pressed="false">Outlined</button></div>
+    </div>
+    <label class="switch" for="edge"><input type="checkbox" id="edge"><span class="track" aria-hidden="true"></span><span>轮廓线</span></label>
+    <button class="plain" id="reset" type="button" hidden>补回奶酪</button>
+  </div>
+
+  <div class="sheet">
+    <canvas class="stage" id="stage" role="img" aria-label="Lewis Carroll 的老鼠尾巴诗，排进一只老鼠的轮廓里。鼠标靠近时文字让开，拖动尾巴老鼠会跑。"></canvas>
+    <p class="readout"><span id="r-layout">layoutNextLine · –</span><span id="r-size">–</span></p>
+  </div>
+  <p class="hint" id="hint"></p>
+
+  <footer>
+    <p>文本出自 Lewis Carroll《爱丽丝梦游仙境》（1865）第三章，属公版。</p>
+    <p>身体里的每一行由 <a href="https://github.com/chenglou/pretext" target="_blank" rel="noopener">Pretext</a> 的 layoutNextLine 逐行排出：每一行先看轮廓、鼠标和咬痕留给它多宽，再决定放哪些字。尾巴上的字是自己写的沿路径排字。</p>
+  </footer>
+</div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

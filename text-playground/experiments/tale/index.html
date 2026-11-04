@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>老鼠尾巴排版</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout: a specimen book. Cool proof-table ground, white sheets, one hairline per plate.
+   Stepped runs tall on the left; Curled sits beside it. */
+:root{
+  --table:#ECEFF3;
+  --sheet:#FFFFFF;
+  --ink:#131722;
+  --ink-soft:#586173;
+  --rule:#D3D9E2;
+  --guide:#6BA6E3; /* non-photo blue, the printer's layout pencil */
+  --serif:"Libre Caslon Text","Songti SC","Noto Serif SC","Source Han Serif SC",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --sans:system-ui,-apple-system,"PingFang SC","Hiragino Sans GB","Noto Sans SC","Microsoft YaHei",sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --table:#0D1016;--sheet:#141922;--ink:#E9EDF4;--ink-soft:#9AA4B5;--rule:#262E3B;--guide:#5B93D0;color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --table:#0D1016;--sheet:#141922;--ink:#E9EDF4;--ink-soft:#9AA4B5;--rule:#262E3B;--guide:#5B93D0;color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html,body{overflow-x:clip}
+body{margin:0;background:var(--table);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65;-webkit-text-size-adjust:100%}
+.wrap{
+  max-width:1120px;margin:0 auto;padding-block:28px 72px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+
+/* header */
+.eyebrow{margin:0 0 14px;font:500 11.5px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+h1{margin:0;font-family:var(--serif);font-weight:700;font-size:clamp(34px,6vw,56px);line-height:1.12;letter-spacing:.02em;text-wrap:balance}
+.tools{margin-top:22px;display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center}
+.switch{position:relative;display:inline-flex;align-items:center;gap:10px;font:500 12.5px/1 var(--mono);letter-spacing:.02em;cursor:pointer;user-select:none}
+.switch input{position:absolute;opacity:0;width:1px;height:1px}
+.switch .track{position:relative;width:34px;height:18px;border:1px solid var(--ink-soft);flex:none}
+.switch .track::after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;background:var(--ink-soft);transition:left .15s}
+.switch input:checked+.track{border-color:var(--guide)}
+.switch input:checked+.track::after{left:18px;background:var(--guide)}
+.switch input:focus-visible+.track{outline:2px solid var(--guide);outline-offset:3px}
+.source summary{font:500 12.5px/1 var(--mono);letter-spacing:.02em;cursor:pointer;color:var(--ink-soft)}
+.source summary:focus-visible{outline:2px solid var(--guide);outline-offset:3px}
+.verse{margin-top:14px;font:italic 400 16px/1.75 var(--serif);color:var(--ink)}
+
+/* plates */
+.plates{display:grid;grid-template-columns:minmax(0,1fr);gap:52px 40px;margin-top:44px}
+@media (min-width:960px){
+  .plates{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);grid-template-areas:"stepped curled";align-items:start}
+  #stepped{grid-area:stepped}
+  #curled{grid-area:curled}
+}
+.plate{min-width:0}
+.plate-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;padding-bottom:10px;margin-bottom:14px;border-bottom:1px solid var(--rule)}
+.plate-head h2{margin:0;display:flex;align-items:baseline;gap:10px;font:italic 400 26px/1.2 var(--serif)}
+.spec{margin:0 0 0 auto;font:400 11.5px/1.5 var(--mono);letter-spacing:.02em;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.sheet{background:var(--sheet);border:1px solid var(--rule);padding:clamp(16px,3vw,28px)}
+
+/* Stepped */
+.stepped-sheet{container-type:inline-size}
+/* The whole tail fits one screen: the unit is a container-width percent, or less if the
+   column (sum of line heights, set from JS as --sum, plus one hairline per line) would
+   run taller than the viewport. */
+.steps{
+  --u:min(1cqw,calc((100svh - 96px - var(--n,44) * 1px) / var(--sum,192)));
+  display:flex;flex-direction:column;position:relative;z-index:1;
+  width:fit-content;margin-inline:auto;
+}
+.step.tip{cursor:grab;touch-action:none}
+.steps.held,.steps.held .step{cursor:grabbing;user-select:none}
+.step{
+  width:max-content;white-space:nowrap;
+  font-family:var(--serif);color:var(--ink);
+  font-size:calc(var(--s) * var(--u));line-height:1.12;
+  margin-left:calc(var(--x) * var(--u));
+  border-bottom:1px solid transparent;
+  transition:border-color .2s;
+}
+.guides .step{border-bottom-color:var(--guide)}
+
+/* SVG plates */
+/* The spiral can be pulled out past its sheet, over the page. */
+.sheet-svg{position:relative}
+.sheet-svg svg{display:block;width:100%;height:auto;overflow:visible;position:relative;z-index:2}
+.curl-tip{position:absolute;z-index:3;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;cursor:grab;touch-action:none}
+.sheet-svg.held,.sheet-svg.held .curl-tip{cursor:grabbing;user-select:none}
+.poem-text{font-family:var(--serif);fill:var(--ink);font-kerning:normal;text-rendering:geometricPrecision}
+.guide-line{fill:none;stroke:var(--guide);stroke-width:1.25;vector-effect:non-scaling-stroke;opacity:0;transition:opacity .2s}
+.guides .guide-line{opacity:1}
+@media (prefers-reduced-motion:reduce){
+  .guide-line,.step,.switch .track::after{transition:none}
+}
+
+.back{display:inline-block;margin-bottom:22px;font:500 12px/1 var(--mono);letter-spacing:.04em;color:var(--ink-soft);text-decoration:none}
+.back:hover{color:var(--ink)}
+.back:focus-visible{outline:2px solid var(--guide);outline-offset:3px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/">← Text playground</a>
+  <header>
+    <p class="eyebrow">Alice’s Adventures in Wonderland · 1865 · Chapter III</p>
+    <h1>老鼠尾巴排版</h1>
+    <div class="tools">
+      <label class="switch" for="guides"><input type="checkbox" id="guides"><span class="track" aria-hidden="true"></span><span>辅助线 non-photo blue</span></label>
+      <details class="source"><summary>原文 ▾</summary><div class="verse" id="verse"></div></details>
+    </div>
+  </header>
+
+  <main class="plates">
+    <section class="plate" id="stepped">
+      <div class="plate-head">
+        <h2><span>Stepped</span></h2>
+        <p class="spec" id="spec-stepped"></p>
+      </div>
+      <div class="sheet stepped-sheet"><div class="steps" id="steps"></div></div>
+    </section>
+
+    <section class="plate" id="curled">
+      <div class="plate-head">
+        <h2><span>Curled</span></h2>
+        <p class="spec" id="spec-curled"></p>
+      </div>
+      <div class="sheet sheet-svg"><svg id="curled-svg" viewBox="0 0 560 560" role="img" aria-label="诗句沿一条由大到小的螺旋线排列，像一条卷起来的尾巴"></svg></div>
+    </section>
+
+  </main>
+
+</div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

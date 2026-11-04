@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>吃奶酪，字守恒</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/">← Text playground</a>
+  <header>
+    <p class="eyebrow">04 · Conservation · one cursor, two shapes</p>
+    <h1>吃奶酪，字守恒</h1>
+    <p class="lede">整首诗一开始都在奶酪里。点奶酪，老鼠跑过去咬一口，奶酪装不下的词就流进它肚子里。奶酪变小，老鼠变胖，两边加起来永远是同一首诗。</p>
+  </header>
+
+  <div class="bar">
+    <button class="plain" id="reset" type="button">换一块新奶酪</button>
+    <label class="switch" for="edge"><input type="checkbox" id="edge" checked><span class="track" aria-hidden="true"></span><span>轮廓线</span></label>
+  </div>
+
+  <div class="sheet">
+    <canvas class="stage" id="stage" role="img" aria-label="左边一块由诗排成的奶酪，右边一只老鼠。点奶酪，老鼠咬一口，奶酪里的词流进老鼠身体。"></canvas>
+    <p class="readout"><span id="r-count">–</span><span id="r-size">–</span></p>
+  </div>
+  <p class="hint">诗只有一份，用一个 cursor 切成两段：cursor 之前的排进老鼠，之后的排进奶酪。每咬一口，就把 cursor 往后挪，挪到奶酪剩下的地方正好装得下为止。老鼠的字号不变，换成调整身体大小，让挪过来的词正好装满。</p>
+</div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

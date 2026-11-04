@@ -1,0 +1,343 @@
+<title>老鼠尾巴排版</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout: a specimen book. Cool proof-table ground, white sheets, one hairline per plate.
+   Stepped runs tall on the left; Curled and Filled stack on the right; Outlined closes the page. */
+:root{
+  --table:#ECEFF3;
+  --sheet:#FFFFFF;
+  --ink:#131722;
+  --ink-soft:#586173;
+  --rule:#D3D9E2;
+  --guide:#6BA6E3; /* non-photo blue, the printer's layout pencil */
+  --serif:"Libre Caslon Text","Songti SC","Noto Serif SC","Source Han Serif SC",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --sans:system-ui,-apple-system,"PingFang SC","Hiragino Sans GB","Noto Sans SC","Microsoft YaHei",sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --table:#0D1016;--sheet:#141922;--ink:#E9EDF4;--ink-soft:#9AA4B5;--rule:#262E3B;--guide:#5B93D0;color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --table:#0D1016;--sheet:#141922;--ink:#E9EDF4;--ink-soft:#9AA4B5;--rule:#262E3B;--guide:#5B93D0;color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--table);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65;-webkit-text-size-adjust:100%}
+.wrap{
+  max-width:1120px;margin:0 auto;padding-block:48px 72px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+
+/* header */
+.eyebrow{margin:0 0 14px;font:500 11.5px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+h1{margin:0;font-family:var(--serif);font-weight:700;font-size:clamp(34px,6vw,56px);line-height:1.12;letter-spacing:.02em;text-wrap:balance}
+.lede{margin:14px 0 0;max-width:30em;color:var(--ink-soft);font-size:16px}
+.tools{margin-top:22px;display:flex;flex-wrap:wrap;gap:14px 28px;align-items:center}
+.switch{position:relative;display:inline-flex;align-items:center;gap:10px;font:500 12.5px/1 var(--mono);letter-spacing:.02em;cursor:pointer;user-select:none}
+.switch input{position:absolute;opacity:0;width:1px;height:1px}
+.switch .track{position:relative;width:34px;height:18px;border:1px solid var(--ink-soft);flex:none}
+.switch .track::after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;background:var(--ink-soft);transition:left .15s}
+.switch input:checked+.track{border-color:var(--guide)}
+.switch input:checked+.track::after{left:18px;background:var(--guide)}
+.switch input:focus-visible+.track{outline:2px solid var(--guide);outline-offset:3px}
+.source summary{font:500 12.5px/1 var(--mono);letter-spacing:.02em;cursor:pointer;color:var(--ink-soft)}
+.source summary:focus-visible{outline:2px solid var(--guide);outline-offset:3px}
+.verse{margin-top:14px;font:italic 400 16px/1.75 var(--serif);color:var(--ink)}
+
+/* plates */
+.plates{display:grid;grid-template-columns:minmax(0,1fr);gap:52px 40px;margin-top:44px}
+@media (min-width:960px){
+  .plates{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);grid-template-areas:"stepped curled" "stepped filled" "outlined outlined";align-items:start}
+  #stepped{grid-area:stepped}
+  #curled{grid-area:curled}
+  #filled{grid-area:filled}
+  #outlined{grid-area:outlined;width:100%;max-width:820px;justify-self:center}
+}
+.plate{min-width:0}
+.plate-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;padding-bottom:10px;margin-bottom:14px;border-bottom:1px solid var(--rule)}
+.plate-head h2{margin:0;display:flex;align-items:baseline;gap:10px;font:italic 400 26px/1.2 var(--serif)}
+.plate-head .zh{font:500 13px var(--sans);letter-spacing:.08em;color:var(--ink-soft)}
+.spec{margin:0 0 0 auto;font:400 11.5px/1.5 var(--mono);letter-spacing:.02em;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.sheet{background:var(--sheet);border:1px solid var(--rule);padding:clamp(16px,3vw,28px)}
+.note{margin:14px 0 0;max-width:30em;font-size:14.5px}
+
+/* Stepped */
+.stepped-sheet{container-type:inline-size}
+.steps{display:flex;flex-direction:column}
+.step{
+  width:max-content;white-space:nowrap;
+  font-family:var(--serif);color:var(--ink);
+  font-size:calc(var(--s) * 1cqw);line-height:1.12;
+  margin-left:calc(var(--x) * 1cqw);
+  border-bottom:1px solid transparent;
+  transition:border-color .2s;
+}
+.guides .step{border-bottom-color:var(--guide)}
+
+/* SVG plates */
+.sheet-svg{overflow-x:auto}
+.sheet-svg svg{display:block;width:100%;min-width:480px;height:auto}
+.poem-text{font-family:var(--serif);fill:var(--ink);font-kerning:normal;text-rendering:geometricPrecision}
+.guide-line{fill:none;stroke:var(--guide);stroke-width:1.25;vector-effect:non-scaling-stroke;opacity:0;transition:opacity .2s}
+.guides .guide-line{opacity:1}
+.trace{fill:none;stroke:none}
+@media (prefers-reduced-motion:reduce){
+  .guide-line,.step,.switch .track::after{transition:none}
+}
+
+footer{margin-top:64px;padding-top:16px;border-top:1px solid var(--rule);max-width:44em;font-size:13px;line-height:1.7;color:var(--ink-soft)}
+footer p{margin:0 0 8px}
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Alice’s Adventures in Wonderland · 1865 · Chapter III</p>
+    <h1>老鼠尾巴排版</h1>
+    <p class="lede">同一首诗，四种排法。每个版本下面写了它得到什么，失去什么。</p>
+    <div class="tools">
+      <label class="switch" for="guides"><input type="checkbox" id="guides"><span class="track" aria-hidden="true"></span><span>辅助线 non-photo blue</span></label>
+      <details class="source"><summary>原文 ▾</summary><div class="verse" id="verse"></div></details>
+    </div>
+  </header>
+
+  <main class="plates">
+    <section class="plate" id="stepped">
+      <div class="plate-head">
+        <h2><span>Stepped</span><span class="zh">阶梯</span></h2>
+        <p class="spec" id="spec-stepped"></p>
+      </div>
+      <div class="sheet stepped-sheet"><div class="steps" id="steps"></div></div>
+      <p class="note">字号一行比一行小，位置左右错开。只靠排版层级暗示一条尾巴，每个字都读得清，代价是形状很含蓄。</p>
+    </section>
+
+    <section class="plate" id="curled">
+      <div class="plate-head">
+        <h2><span>Curled</span><span class="zh">盘卷</span></h2>
+        <p class="spec" id="spec-curled"></p>
+      </div>
+      <div class="sheet sheet-svg"><svg id="curled-svg" viewBox="0 0 560 560" role="img" aria-label="诗句沿一条由大到小的螺旋线排列，像一条卷起来的尾巴"></svg></div>
+      <p class="note">字沿一条越卷越紧的螺旋走，字号跟着变小。尾巴的意思很直接，代价是转到下半圈字是倒的，要歪头读。</p>
+    </section>
+
+    <section class="plate" id="filled">
+      <div class="plate-head">
+        <h2><span>Filled</span><span class="zh">填充</span></h2>
+        <p class="spec" id="spec-filled"></p>
+      </div>
+      <div class="sheet sheet-svg"><svg id="filled-svg" viewBox="0 0 600 420" role="img" aria-label="整首诗被排进一只老鼠侧面轮廓里，每行按轮廓宽度两端对齐"></svg></div>
+      <p class="note">整段诗被灌进一只老鼠的轮廓，每行按轮廓的宽度两端对齐。图形最清楚，诗的断行消失了，变成一块纹理。</p>
+    </section>
+
+    <section class="plate" id="outlined">
+      <div class="plate-head">
+        <h2><span>Outlined</span><span class="zh">轮廓</span></h2>
+        <p class="spec" id="spec-outlined"></p>
+      </div>
+      <div class="sheet sheet-svg"><svg id="outlined-svg" viewBox="0 0 600 420" role="img" aria-label="诗句沿老鼠轮廓绕两圈，中间留白，像线稿"></svg></div>
+      <p class="note">字只描边，沿着轮廓向内绕两圈，中间留白，像线稿。最有设计感，字也最小，放大才好读。</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>文本出自 Lewis Carroll《爱丽丝梦游仙境》（1865）第三章，属公版。老鼠尾巴这首诗在不同版本里排法各异，这四种是原创的尝试，不对应任何一版。</p>
+    <p>辅助线用的 non-photo blue 是印刷里画版式草稿的浅蓝，制版拍照时不会被拍进去。</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+'use strict';
+var NS='http://www.w3.org/2000/svg';
+function $(s){return document.querySelector(s);}
+function el(n,a){var e=document.createElementNS(NS,n);if(a)for(var k in a)e.setAttribute(k,a[k]);return e;}
+
+var LINES=[
+'Fury said to a mouse,',
+'That he met in the house,',
+'“Let us both go to law:',
+'I will prosecute you.—',
+'Come, I’ll take no denial;',
+'We must have the trial;',
+'For really this morning',
+'I’ve nothing to do.”',
+'Said the mouse to the cur,',
+'“Such a trial, dear sir,',
+'With no jury or judge,',
+'would be wasting our breath.”',
+'“I’ll be judge, I’ll be jury,”',
+'Said cunning old Fury:',
+'“I’ll try the whole cause,',
+'and condemn you to death.”'
+];
+var FLOW=LINES.join(' ').replace('.— ','.—');
+var FRAGS=['Fury said to a','mouse, That he','met in the','house,','“Let us','both go','to law: I','will prosecute','you.—Come,','I’ll take no','denial; We','must have','the trial;','For really','this morning','I’ve nothing','to do.”','Said the','mouse to the','cur, “Such','a trial,','dear sir,','With','no jury','or judge,','would be','wasting','our','breath.”','“I’ll be','judge, I’ll','be jury,”','Said','cunning','old Fury:','“I’ll','try the','whole','cause,','and','condemn','you','to','death.”'];
+
+/* mouse in profile, facing left; 600 x 420 canvas */
+var MOUSE='M28 292C40 262 82 236 128 214C100 160 128 92 180 88C236 86 262 140 236 196C300 160 420 120 500 170C570 215 590 320 520 372C450 405 300 400 220 380C160 366 80 340 28 292Z';
+var EYE=[96,268,8];
+
+var mc=document.createElement('canvas').getContext('2d');
+function M(str){
+  mc.font='400 100px '+getComputedStyle(document.body).getPropertyValue('--serif');
+  return mc.measureText(str).width/100;
+}
+
+function buildVerse(){
+  var v=$('#verse');v.replaceChildren();
+  LINES.forEach(function(t){var d=document.createElement('div');d.textContent=t;v.append(d);});
+}
+
+function buildStepped(){
+  var box=$('#steps');box.replaceChildren();
+  var n=FRAGS.length,SMAX=6.2,SMIN=2.0,XMAX=24,CYC=2;
+  FRAGS.forEach(function(t,i){
+    var u=i/(n-1);
+    var s=SMAX-(SMAX-SMIN)*Math.pow(u,.85);
+    var ph=(u*CYC)%1,tri=1-Math.abs(2*ph-1);
+    var d=document.createElement('div');d.className='step';
+    d.style.setProperty('--s',s.toFixed(2));
+    d.style.setProperty('--x',(XMAX*tri).toFixed(2));
+    d.textContent=t;box.append(d);
+  });
+  $('#spec-stepped').textContent=n+' lines · '+SMAX+'% → '+SMIN+'% of measure · indent 0–'+XMAX+'%';
+}
+
+function buildCurled(){
+  var svg=$('#curled-svg');svg.replaceChildren();
+  var cx=280,cy=290,r0=232,r1=24,FMAX=34,FMIN=6.4,EXP=.7;
+  var words=FLOW.split(' '),N=words.length,sp=M(' ');
+  var sizes=words.map(function(_,k){return FMAX-(FMAX-FMIN)*Math.pow(k/(N-1),EXP);});
+  var total=0;words.forEach(function(w,k){total+=(M(w)+sp)*sizes[k];});
+  var q=total*1.035/(r0-r1),kk=1/Math.sqrt(q*q-1);
+  var th=Math.log(r0/r1)/kk*1.03,d='';
+  for(var t=0;t<=th;t+=.03){
+    var r=r0*Math.exp(-kk*t),a=-Math.PI/2+t;
+    d+=(t?'L':'M')+(cx+r*Math.cos(a)).toFixed(1)+' '+(cy+r*Math.sin(a)).toFixed(1);
+  }
+  svg.append(el('path',{id:'curled-path',d:d,'class':'guide-line'}));
+  var tx=el('text',{'class':'poem-text'}),tp=el('textPath',{href:'#curled-path'});
+  words.forEach(function(w,k){
+    var ts=el('tspan',{'font-size':sizes[k].toFixed(2)});
+    ts.textContent=w+(k<N-1?' ':'');tp.append(ts);
+  });
+  tx.append(tp);svg.append(tx);
+  $('#spec-curled').textContent=(th/(2*Math.PI)).toFixed(1)+' turns · type '+FMAX+' → '+FMIN;
+}
+
+function buildFilled(){
+  var svg=$('#filled-svg');svg.replaceChildren();
+  var W=600,H=420;svg.setAttribute('viewBox','0 0 '+W+' '+H);
+  var cv=document.createElement('canvas');cv.width=W;cv.height=H;
+  var c=cv.getContext('2d',{willReadFrequently:true});
+  c.fillStyle='#000';c.fill(new Path2D(MOUSE));
+  c.globalCompositeOperation='destination-out';
+  c.beginPath();c.arc(EYE[0],EYE[1],EYE[2],0,Math.PI*2);c.fill();
+  var A=c.getImageData(0,0,W,H).data;
+  function on(x,y){return y>=0&&y<H&&A[(y*W+x)*4+3]>127;}
+  var words=FLOW.split(' '),wm=words.map(function(w){return M(w);}),sp=M(' '),PAD=5;
+
+  function layout(s){
+    var lh=s*1.3,rows=[],k=0;
+    for(var top=86;top+lh<=398&&k<words.length;top+=lh){
+      var ys=[.12,.5,.88].map(function(f){return Math.round(top+lh*f);});
+      var x=0;
+      while(x<W&&k<words.length){
+        while(x<W&&!ys.every(function(y){return on(x,y);}))x++;
+        var x0=x;
+        while(x<W&&ys.every(function(y){return on(x,y);}))x++;
+        var avail=x-x0-PAD*2;
+        if(avail<s*2)continue;
+        var line=[],w=0;
+        while(k<words.length){
+          var add=(line.length?sp*s:0)+wm[k]*s;
+          if(w+add>avail)break;
+          line.push(k);w+=add;k++;
+        }
+        if(line.length)rows.push({x:x0+PAD,avail:avail,line:line,w:w,top:top,lh:lh});
+      }
+    }
+    return{rows:rows,done:k>=words.length};
+  }
+
+  var s=30,L=layout(s);
+  while(!L.done&&s>8){s-=.25;L=layout(s);}
+
+  svg.append(el('path',{d:MOUSE,'class':'guide-line'}));
+  svg.append(el('circle',{cx:EYE[0],cy:EYE[1],r:EYE[2],'class':'guide-line'}));
+
+  var last=L.rows.length-1;
+  L.rows.forEach(function(r,i){
+    var n=r.line.length,sw=r.w-(n-1)*sp*s;
+    var justify=n>1&&i<last;
+    var gap=justify?(r.avail-sw)/(n-1):sp*s;
+    var x=r.x;
+    if(n===1&&i<last)x=r.x+(r.avail-sw)/2;
+    var t=el('text',{'class':'poem-text','font-size':s.toFixed(2),y:(r.top+r.lh/2+s*.3).toFixed(1)});
+    r.line.forEach(function(k){
+      var ts=el('tspan',{x:x.toFixed(1)});ts.textContent=words[k];t.append(ts);
+      x+=wm[k]*s+gap;
+    });
+    svg.append(t);
+  });
+  $('#spec-filled').textContent='type '+s.toFixed(1)+'/'+(s*1.3).toFixed(1)+' · '+L.rows.length+' runs · '+words.length+' words';
+}
+
+function buildOutlined(){
+  var svg=$('#outlined-svg');svg.replaceChildren();
+  var W=600,H=420;svg.setAttribute('viewBox','0 0 '+W+' '+H);
+  var base=el('path',{d:MOUSE,'class':'guide-line'});svg.append(base);
+  var P=base.getTotalLength(),n=Math.round(P/2),pts=[],i;
+  for(i=0;i<n;i++){var p=base.getPointAtLength(i*P/n);pts.push([p.x,p.y]);}
+  var cx=0,cy=0;pts.forEach(function(p){cx+=p[0];cy+=p[1];});cx/=n;cy/=n;
+  var rmin=Infinity;pts.forEach(function(p){rmin=Math.min(rmin,Math.hypot(p[0]-cx,p[1]-cy));});
+  var m=M(FLOW),TURNS=2;
+
+  function spiral(dl){
+    var total=Math.round(n*(TURNS+.04)),len=0,at=0,prev=null,q=[];
+    for(var j=0;j<=total;j++){
+      var ii=j%n,sc=1-dl*(j/n);
+      var pp=[cx+(pts[ii][0]-cx)*sc,cy+(pts[ii][1]-cy)*sc];
+      if(prev)len+=Math.hypot(pp[0]-prev[0],pp[1]-prev[1]);
+      if(j===TURNS*n)at=len;
+      q.push(pp);prev=pp;
+    }
+    return{q:q,s:at/(m*1.015)};
+  }
+  var delta=.12,res=spiral(delta);
+  for(;delta<=.3;delta+=.01){
+    res=spiral(delta);
+    if(delta*rmin>=res.s*1.5)break;
+  }
+  var d=res.q.map(function(p,j){return(j?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1);}).join('');
+  svg.append(el('path',{id:'outlined-path',d:d,'class':'trace'}));
+  var t=el('text',{'class':'poem-text','font-size':res.s.toFixed(2),dy:(res.s*.3).toFixed(2)});
+  var tp=el('textPath',{href:'#outlined-path'});tp.textContent=FLOW;t.append(tp);svg.append(t);
+  $('#spec-outlined').textContent='type '+res.s.toFixed(1)+' · '+TURNS+' turns · echo step '+Math.round(delta*100)+'%';
+}
+
+function buildAll(){
+  [buildStepped,buildCurled,buildFilled,buildOutlined].forEach(function(f){
+    try{f();}catch(e){console.error(f.name,e);}
+  });
+}
+
+buildVerse();
+buildAll();
+try{
+  Promise.race([
+    document.fonts.load('400 20px "Libre Caslon Text"'),
+    new Promise(function(r){setTimeout(r,2500);})
+  ]).then(buildAll);
+}catch(e){}
+
+var cb=$('#guides');
+cb.addEventListener('change',function(){document.body.classList.toggle('guides',cb.checked);});
+if(cb.checked)document.body.classList.add('guides');
+})();
+</script>

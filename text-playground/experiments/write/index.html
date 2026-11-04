@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>写你自己的尾巴</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap">
+<link rel="stylesheet" href="/src/style.css">
+<style>
+.compose{margin-top:26px;display:grid;gap:10px}
+.compose textarea{width:100%;min-height:92px;resize:vertical;padding:12px 14px;background:var(--sheet);color:var(--ink);border:1px solid var(--rule);font:400 16px/1.6 var(--serif)}
+.compose textarea:focus-visible{outline:2px solid var(--guide);outline-offset:2px}
+.compose .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/">← Text playground</a>
+  <header>
+    <p class="eyebrow">03 · Input · prepare per keystroke</p>
+    <h1>写你自己的尾巴</h1>
+    <p class="lede">字先填满身体，装不下的长成尾巴。写得越多，尾巴越长，最后在纸面上一圈圈绕下去。</p>
+  </header>
+
+  <div class="compose">
+    <label class="lab" for="text">你的故事</label>
+    <textarea id="text" maxlength="3000" spellcheck="false"></textarea>
+    <div class="row">
+      <button class="plain" id="restore" type="button">换回原诗</button>
+      <button class="plain" id="clear" type="button">清空</button>
+      <label class="switch" for="edge"><input type="checkbox" id="edge"><span class="track" aria-hidden="true"></span><span>轮廓线</span></label>
+    </div>
+  </div>
+
+  <div class="sheet">
+    <canvas class="stage" id="stage" role="img" aria-label="一只由文字排成的老鼠，输入框里的字先填满它的身体，多出来的字变成尾巴。"></canvas>
+    <p class="readout"><span id="r-count">–</span><span id="r-layout">–</span></p>
+  </div>
+  <p class="hint">字号是固定的，跟原诗排进老鼠时一样。所以字写得少，身体只填满上面几行；写得多，尾巴就沿着折返线往下长。鼠标靠近，字还是会让开。</p>
+</div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>
