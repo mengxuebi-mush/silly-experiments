@@ -20,6 +20,9 @@ export default defineConfig(share
       },
     }
   : {
+      // Relative URLs, so the built site works under any path (GitHub Pages serves it
+      // at /silly-experiments/text-playground/).
+      base: './',
       build: {
         rolldownOptions: {
           input: {

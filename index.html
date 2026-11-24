@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>silly experiments</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Caslon+Text:ital,wght@0,400;1,400&display=swap">
+<style>
+:root{
+  --table:#ECEFF3;--sheet:#FFFFFF;--ink:#131722;--ink-soft:#586173;--rule:#D3D9E2;--guide:#6BA6E3;
+  --serif:"Libre Caslon Text",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--table:#0D1016;--sheet:#141922;--ink:#E9EDF4;--ink-soft:#9AA4B5;--rule:#262E3B;--guide:#5B93D0;color-scheme:dark}
+}
+:root[data-theme="dark"]{--table:#0D1016;--sheet:#141922;--ink:#E9EDF4;--ink-soft:#9AA4B5;--rule:#262E3B;--guide:#5B93D0;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--table);color:var(--ink);font:16px/1.6 system-ui,-apple-system,sans-serif}
+.wrap{max-width:880px;margin:0 auto;padding:56px 16px 72px}
+h1{margin:0;font:italic 400 clamp(36px,7vw,56px)/1.1 var(--serif)}
+ol{list-style:none;margin:40px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:18px}
+a.card{display:flex;flex-direction:column;height:100%;padding:20px;background:var(--sheet);border:1px solid var(--rule);color:inherit;text-decoration:none;transition:border-color .15s}
+a.card:hover{border-color:var(--ink-soft)}
+a.card:focus-visible{outline:2px solid var(--guide);outline-offset:3px}
+.card h2{margin:0;font:italic 400 26px/1.2 var(--serif)}
+.card p{margin:10px 0 0;font-size:14.5px}
+.tag{margin-top:auto;padding-top:14px;font:400 11px/1.4 var(--mono);color:var(--ink-soft)}
+footer{margin-top:48px;font:400 12px/1.5 var(--mono);color:var(--ink-soft)}
+footer a{color:inherit}
+@media (prefers-reduced-motion:reduce){a.card{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>silly experiments</h1>
+  <ol>
+    <li><a class="card" href="text-playground/">
+      <h2>Text playground</h2>
+      <p>The Mouse's Tale from Alice (1865) laid out as an image, then played with: a mouse whose tail is the overflow, a dog made of Fury's lines, a spiral you can unroll.</p>
+      <span class="tag">Pretext · canvas · SVG</span></a></li>
+  </ol>
+  <footer><a href="https://github.com/mengxuebi-mush/silly-experiments">source on GitHub</a></footer>
+</div>
+</body>
+</html>
